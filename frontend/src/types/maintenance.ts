@@ -1,0 +1,10 @@
+export const maintenanceTypes = ['Oil Change', 'Brake Service', 'Tyre Replacement', 'Engine Repair', 'Inspection', 'Electrical Repair', 'General Service', 'Other'] as const;
+export const maintenancePriorities = ['Low', 'Medium', 'High', 'Critical'] as const;
+export const maintenanceStatuses = ['Scheduled', 'Active', 'Completed', 'Cancelled'] as const;
+export type MaintenanceType = (typeof maintenanceTypes)[number]; export type MaintenancePriority = (typeof maintenancePriorities)[number]; export type MaintenanceStatus = (typeof maintenanceStatuses)[number];
+export type MaintenanceVehicle = { id: string; registrationNumber: string; name: string; model?: string; type: string; odometer: number; region: string; status: string };
+export type Maintenance = { id: string; maintenanceNumber: string; vehicle: MaintenanceVehicle; type: MaintenanceType; description: string; priority: MaintenancePriority; status: MaintenanceStatus; scheduledDate?: string; startedAt?: string; completedAt?: string; cancelledAt?: string; serviceProvider?: string; technicianName?: string; cost: number; odometerAtService?: number; notes?: string; cancellationReason?: string; createdAt: string; updatedAt: string };
+export type MaintenanceInput = { vehicle: string; type: MaintenanceType; description: string; priority: MaintenancePriority; scheduledDate?: string; serviceProvider?: string; technicianName?: string; cost: number; notes?: string };
+export type MaintenanceFilters = { search: string; status: string; priority: string; type: string; sort: 'newest' | 'oldest' | 'scheduledDate' | 'cost' };
+export type MaintenanceListResponse = { success: true; data: Maintenance[]; meta: { total: number; page: number; limit: number; totalPages: number } };
+export type MaintenanceResponse = { success: true; data: Maintenance };

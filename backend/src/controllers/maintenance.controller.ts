@@ -1,0 +1,14 @@
+import type { NextFunction, Request, Response } from 'express';
+import type { AuthenticatedRequest } from '../middleware/auth.middleware.js';
+import { cancelMaintenance, completeMaintenance, createMaintenance, eligibleVehicles, getMaintenance, listMaintenance, startMaintenance, updateMaintenance, type MaintenanceListOptions } from '../services/maintenance.service.js';
+import { validateCancel, validateCompletion, validateMaintenanceInput, type MaintenanceInput } from '../validation/maintenance.validation.js';
+
+export async function getMaintenanceLogs(request: Request, response: Response, next: NextFunction) { try { response.status(200).json({ success: true, ...(await listMaintenance(request.query as MaintenanceListOptions)) }); } catch (error) { next(error); } }
+export async function getMaintenanceById(request: Request, response: Response, next: NextFunction) { try { response.status(200).json({ success: true, data: await getMaintenance(id(request.params.id)) }); } catch (error) { next(error); } }
+export async function postMaintenance(request: AuthenticatedRequest, response: Response, next: NextFunction) { try { response.status(201).json({ success: true, data: await createMaintenance(validateMaintenanceInput(request.body) as MaintenanceInput, request.user!.id) }); } catch (error) { next(error); } }
+export async function patchMaintenance(request: Request, response: Response, next: NextFunction) { try { response.status(200).json({ success: true, data: await updateMaintenance(id(request.params.id), validateMaintenanceInput(request.body, true)) }); } catch (error) { next(error); } }
+export async function start(request: Request, response: Response, next: NextFunction) { try { response.status(200).json({ success: true, message: 'Maintenance started successfully', data: await startMaintenance(id(request.params.id)) }); } catch (error) { next(error); } }
+export async function complete(request: Request, response: Response, next: NextFunction) { try { response.status(200).json({ success: true, message: 'Maintenance completed successfully', data: await completeMaintenance(id(request.params.id), validateCompletion(request.body)) }); } catch (error) { next(error); } }
+export async function cancel(request: Request, response: Response, next: NextFunction) { try { const { reason } = validateCancel(request.body); response.status(200).json({ success: true, message: 'Maintenance cancelled successfully', data: await cancelMaintenance(id(request.params.id), reason) }); } catch (error) { next(error); } }
+export async function options(_request: Request, response: Response, next: NextFunction) { try { response.status(200).json({ success: true, data: await eligibleVehicles() }); } catch (error) { next(error); } }
+function id(value: string | string[]) { return Array.isArray(value) ? value[0] : value; }

@@ -7,6 +7,7 @@ import { PlaceholderPage } from '../pages/PlaceholderPage';
 import { VehiclesPage } from '../pages/VehiclesPage';
 import { DriversPage } from '../pages/DriversPage';
 import { TripsPage } from '../pages/TripsPage';
+import { MaintenancePage } from '../pages/MaintenancePage';
 
 export const router = createBrowserRouter([
   {
@@ -36,12 +37,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'maintenance',
-            element: (
-              <PlaceholderPage
-                title="Maintenance"
-                description="Track preventive maintenance, inspections, and workshop queues."
-              />
-            ),
+            element: <MaintenancePage />,
           },
           {
             path: 'fuel-expense',

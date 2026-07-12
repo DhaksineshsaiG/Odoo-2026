@@ -1,0 +1,14 @@
+import { Router } from 'express';
+import { authorizeRoles, requireAuth } from '../middleware/auth.middleware.js';
+import { cancel, complete, getMaintenanceById, getMaintenanceLogs, options, patchMaintenance, postMaintenance, start } from '../controllers/maintenance.controller.js';
+export const maintenanceRouter = Router();
+const readRoles = ['fleet_manager', 'dispatcher', 'safety_officer', 'financial_analyst'] as const;
+maintenanceRouter.use(requireAuth);
+maintenanceRouter.get('/', authorizeRoles(...readRoles), getMaintenanceLogs);
+maintenanceRouter.get('/options/eligible-vehicles', authorizeRoles('fleet_manager'), options);
+maintenanceRouter.post('/', authorizeRoles('fleet_manager'), postMaintenance);
+maintenanceRouter.patch('/:id', authorizeRoles('fleet_manager'), patchMaintenance);
+maintenanceRouter.post('/:id/start', authorizeRoles('fleet_manager'), start);
+maintenanceRouter.post('/:id/complete', authorizeRoles('fleet_manager'), complete);
+maintenanceRouter.post('/:id/cancel', authorizeRoles('fleet_manager'), cancel);
+maintenanceRouter.get('/:id', authorizeRoles(...readRoles), getMaintenanceById);
