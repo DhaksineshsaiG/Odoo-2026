@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import { BusFront, RadioTower, X } from 'lucide-react';
+import { BusFront, LogOut, RadioTower, X } from 'lucide-react';
 import { navigationItems } from '../../app/navigation';
+import { useAuth } from '../../hooks/useAuth';
+import { roleLabels } from '../../types/auth';
+import { useNavigate } from 'react-router-dom';
 
 type SidebarProps = {
   isOpen: boolean;
@@ -16,9 +19,18 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   ].join(' ');
 
 function SidebarContent({ onClose }: { onClose?: () => void }) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    onClose?.();
+    navigate('/login', { replace: true });
+  }
+
   return (
     <>
-      <NavLink to="/" className="flex items-center gap-3 px-2">
+      <NavLink to="/dashboard" className="flex items-center gap-3 px-2">
         <span className="flex h-10 w-10 items-center justify-center rounded-md bg-brand-600 text-white">
           <BusFront size={22} aria-hidden="true" />
         </span>
@@ -46,9 +58,27 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
           </span>
           <div>
             <p className="text-sm font-semibold text-slate-900">System Online</p>
-            <p className="text-xs text-slate-500">Phase 0 shell ready</p>
+            <p className="text-xs text-slate-500">Secure session active</p>
           </div>
         </div>
+      </div>
+      <div className="mt-3 flex items-center gap-3 px-2">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-brand-100 text-xs font-semibold text-brand-700">
+          {user?.name.slice(0, 2).toUpperCase()}
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-slate-900">{user?.name}</p>
+          <p className="truncate text-xs text-slate-500">{user ? roleLabels[user.role] : ''}</p>
+        </div>
+        <button
+          type="button"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-950"
+          aria-label="Log out"
+          title="Log out"
+          onClick={handleLogout}
+        >
+          <LogOut size={17} aria-hidden="true" />
+        </button>
       </div>
     </>
   );

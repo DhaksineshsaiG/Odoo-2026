@@ -1,8 +1,9 @@
 import { createApp } from './app.js';
 import { connectDatabase } from './config/database.js';
-import { env } from './config/env.js';
+import { assertRequiredEnvironment, env } from './config/env.js';
 
 async function bootstrap() {
+  assertRequiredEnvironment();
   const app = createApp();
 
   try {

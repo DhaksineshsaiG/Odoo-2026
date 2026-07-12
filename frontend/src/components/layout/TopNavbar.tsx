@@ -1,10 +1,21 @@
-import { Bell, Menu, Search } from 'lucide-react';
+import { Bell, LogOut, Menu, Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import { roleLabels } from '../../types/auth';
 
 type TopNavbarProps = {
   onOpenMenu: () => void;
 };
 
 export function TopNavbar({ onOpenMenu }: TopNavbarProps) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate('/login', { replace: true });
+  }
+
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
@@ -42,13 +53,22 @@ export function TopNavbar({ onOpenMenu }: TopNavbarProps) {
           </button>
           <div className="flex items-center gap-3 rounded-md border border-slate-200 bg-white px-3 py-2">
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-100 text-sm font-semibold text-brand-700">
-              TO
+              {user?.name.slice(0, 2).toUpperCase()}
             </span>
             <div className="hidden text-left sm:block">
-              <p className="text-sm font-semibold leading-4 text-slate-900">Ops Admin</p>
-              <p className="text-xs text-slate-500">Control Center</p>
+              <p className="text-sm font-semibold leading-4 text-slate-900">{user?.name}</p>
+              <p className="text-xs text-slate-500">{user ? roleLabels[user.role] : ''}</p>
             </div>
           </div>
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 text-slate-600 transition hover:bg-slate-50 hover:text-slate-950"
+            aria-label="Log out"
+            title="Log out"
+            onClick={handleLogout}
+          >
+            <LogOut size={18} aria-hidden="true" />
+          </button>
         </div>
       </div>
     </header>

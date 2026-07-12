@@ -17,7 +17,7 @@ export type NavigationItem = {
 };
 
 export const navigationItems: NavigationItem[] = [
-  { label: 'Dashboard', path: '/', icon: LayoutDashboard },
+  { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
   { label: 'Vehicle Registry', path: '/vehicles', icon: CarFront },
   { label: 'Driver Management', path: '/drivers', icon: UserRoundCog },
   { label: 'Trip Management', path: '/trips', icon: ShieldCheck },
