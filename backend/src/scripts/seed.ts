@@ -4,6 +4,7 @@ import { connectDatabase } from '../config/database.js';
 import { assertRequiredEnvironment } from '../config/env.js';
 import { UserModel, type UserRole } from '../models/user.model.js';
 import { VehicleModel, type VehicleStatus, type VehicleType } from '../models/vehicle.model.js';
+import { DriverModel, type DriverStatus, type LicenseCategory } from '../models/driver.model.js';
 
 const demoUsers: Array<{ name: string; email: string; password: string; role: UserRole }> = [
   {
@@ -78,6 +79,38 @@ const demoVehicles: Array<{
   },
 ];
 
+const expiringLicenseDate = new Date();
+expiringLicenseDate.setDate(expiringLicenseDate.getDate() + 14);
+
+const demoDrivers: Array<{
+  employeeId: string;
+  name: string;
+  licenseNumber: string;
+  licenseCategory: LicenseCategory;
+  licenseExpiryDate: Date;
+  contactNumber: string;
+  email: string;
+  address: string;
+  safetyScore: number;
+  status: DriverStatus;
+}> = [
+  {
+    employeeId: 'EMP001', name: 'Alex Johnson', licenseNumber: 'TNDL123456789', licenseCategory: 'Heavy',
+    licenseExpiryDate: new Date('2028-12-31T00:00:00.000Z'), contactNumber: '9876543210', email: 'alex@transitops.com',
+    address: 'Coimbatore', safetyScore: 95, status: 'Available',
+  },
+  {
+    employeeId: 'EMP002', name: 'Sarah Williams', licenseNumber: 'TNDL987654321', licenseCategory: 'Light',
+    licenseExpiryDate: expiringLicenseDate, contactNumber: '9123456780', email: 'sarah@transitops.com',
+    address: 'Tiruppur', safetyScore: 89, status: 'Available',
+  },
+  {
+    employeeId: 'EMP003', name: 'Michael Davis', licenseNumber: 'TNDL567891234', licenseCategory: 'Heavy',
+    licenseExpiryDate: new Date('2025-12-31T00:00:00.000Z'), contactNumber: '9988776655', email: 'michael@transitops.com',
+    address: 'Erode', safetyScore: 70, status: 'Suspended',
+  },
+];
+
 async function seed() {
   assertRequiredEnvironment();
   await connectDatabase();
@@ -110,6 +143,17 @@ async function seed() {
 
     await VehicleModel.create({ ...demoVehicle, createdBy: fleetManager.id });
     console.info(`[seed] Created vehicle ${demoVehicle.registrationNumber}.`);
+  }
+
+  for (const demoDriver of demoDrivers) {
+    const existingDriver = await DriverModel.findOne({ employeeId: demoDriver.employeeId });
+    if (existingDriver) {
+      console.info(`[seed] ${demoDriver.employeeId} already exists; skipped.`);
+      continue;
+    }
+
+    await DriverModel.create({ ...demoDriver, createdBy: fleetManager.id });
+    console.info(`[seed] Created driver ${demoDriver.employeeId}.`);
   }
 }
 

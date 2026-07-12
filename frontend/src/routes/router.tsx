@@ -5,6 +5,7 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { LoginPage } from '../pages/LoginPage';
 import { PlaceholderPage } from '../pages/PlaceholderPage';
 import { VehiclesPage } from '../pages/VehiclesPage';
+import { DriversPage } from '../pages/DriversPage';
 
 export const router = createBrowserRouter([
   {
@@ -26,12 +27,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'drivers',
-            element: (
-              <PlaceholderPage
-                title="Driver Management"
-                description="Manage operator records, assignments, licenses, and duty readiness."
-              />
-            ),
+            element: <DriversPage />,
           },
           {
             path: 'trips',
