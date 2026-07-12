@@ -4,6 +4,7 @@ import { AppLayout } from '../components/layout/AppLayout';
 import { DashboardPage } from '../pages/DashboardPage';
 import { LoginPage } from '../pages/LoginPage';
 import { PlaceholderPage } from '../pages/PlaceholderPage';
+import { VehiclesPage } from '../pages/VehiclesPage';
 
 export const router = createBrowserRouter([
   {
@@ -21,12 +22,7 @@ export const router = createBrowserRouter([
           { path: 'dashboard', element: <DashboardPage /> },
           {
             path: 'vehicles',
-            element: (
-              <PlaceholderPage
-                title="Vehicle Registry"
-                description="Register, classify, and monitor fleet assets across the transport network."
-              />
-            ),
+            element: <VehiclesPage />,
           },
           {
             path: 'drivers',

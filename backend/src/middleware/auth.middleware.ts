@@ -16,7 +16,7 @@ export function requireAuth(request: AuthenticatedRequest, response: Response, n
   const token = authorization?.startsWith('Bearer ') ? authorization.slice(7) : undefined;
 
   if (!token) {
-    response.status(401).json({ message: 'Authentication token is required.' });
+    response.status(401).json({ success: false, message: 'Authentication token is required.' });
     return;
   }
 
@@ -29,26 +29,26 @@ export function requireAuth(request: AuthenticatedRequest, response: Response, n
       typeof payload.email !== 'string' ||
       !isUserRole(payload.role)
     ) {
-      response.status(401).json({ message: 'Authentication token is invalid or expired.' });
+      response.status(401).json({ success: false, message: 'Authentication token is invalid or expired.' });
       return;
     }
 
     request.user = { id: payload.id, email: payload.email, role: payload.role };
     next();
   } catch {
-    response.status(401).json({ message: 'Authentication token is invalid or expired.' });
+    response.status(401).json({ success: false, message: 'Authentication token is invalid or expired.' });
   }
 }
 
 export function authorizeRoles(...allowedRoles: UserRole[]) {
   return (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
     if (!request.user) {
-      response.status(401).json({ message: 'Authentication token is required.' });
+      response.status(401).json({ success: false, message: 'Authentication token is required.' });
       return;
     }
 
     if (!allowedRoles.includes(request.user.role)) {
-      response.status(403).json({ message: 'You do not have permission to access this resource.' });
+      response.status(403).json({ success: false, message: 'You do not have permission to access this resource.' });
       return;
     }
 
