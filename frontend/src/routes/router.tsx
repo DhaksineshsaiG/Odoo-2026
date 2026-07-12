@@ -3,7 +3,6 @@ import { ProtectedRoute, PublicOnlyRoute } from '../components/auth/ProtectedRou
 import { AppLayout } from '../components/layout/AppLayout';
 import { DashboardPage } from '../pages/DashboardPage';
 import { LoginPage } from '../pages/LoginPage';
-import { PlaceholderPage } from '../pages/PlaceholderPage';
 import { VehiclesPage } from '../pages/VehiclesPage';
 import { DriversPage } from '../pages/DriversPage';
 import { TripsPage } from '../pages/TripsPage';
@@ -43,15 +42,6 @@ export const router = createBrowserRouter([
           {
             path: 'fuel-expense',
             element: <FuelExpensePage />,
-          },
-          {
-            path: 'reports',
-            element: (
-              <PlaceholderPage
-                title="Reports"
-                description="Prepare operational insights, performance summaries, and compliance exports."
-              />
-            ),
           },
         ],
       },

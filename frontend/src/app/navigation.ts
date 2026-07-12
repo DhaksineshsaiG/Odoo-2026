@@ -1,5 +1,4 @@
 import {
-  BarChart3,
   CarFront,
   Fuel,
   LayoutDashboard,
@@ -22,5 +21,4 @@ export const navigationItems: NavigationItem[] = [
   { label: 'Trip Management', path: '/trips', icon: ShieldCheck },
   { label: 'Maintenance', path: '/maintenance', icon: Wrench },
   { label: 'Fuel & Expense', path: '/fuel-expense', icon: Fuel },
-  { label: 'Reports', path: '/reports', icon: BarChart3 },
 ];
