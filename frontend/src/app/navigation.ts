@@ -4,7 +4,6 @@ import {
   Fuel,
   LayoutDashboard,
   LucideIcon,
-  Settings,
   ShieldCheck,
   UserRoundCog,
   Wrench,
@@ -24,5 +23,4 @@ export const navigationItems: NavigationItem[] = [
   { label: 'Maintenance', path: '/maintenance', icon: Wrench },
   { label: 'Fuel & Expense', path: '/fuel-expense', icon: Fuel },
   { label: 'Reports', path: '/reports', icon: BarChart3 },
-  { label: 'Settings', path: '/settings', icon: Settings },
 ];

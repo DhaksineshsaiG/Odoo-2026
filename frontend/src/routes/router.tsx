@@ -53,15 +53,6 @@ export const router = createBrowserRouter([
               />
             ),
           },
-          {
-            path: 'settings',
-            element: (
-              <PlaceholderPage
-                title="Settings"
-                description="Configure organization preferences, access rules, and platform defaults."
-              />
-            ),
-          },
         ],
       },
     ],
