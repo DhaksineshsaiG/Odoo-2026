@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { PlaceholderPage } from '../pages/PlaceholderPage';
 import { VehiclesPage } from '../pages/VehiclesPage';
 import { DriversPage } from '../pages/DriversPage';
+import { TripsPage } from '../pages/TripsPage';
 
 export const router = createBrowserRouter([
   {
@@ -31,12 +32,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'trips',
-            element: (
-              <PlaceholderPage
-                title="Trip Management"
-                description="Plan, supervise, and audit scheduled trips and service routes."
-              />
-            ),
+            element: <TripsPage />,
           },
           {
             path: 'maintenance',
