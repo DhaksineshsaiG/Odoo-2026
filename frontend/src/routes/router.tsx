@@ -8,6 +8,7 @@ import { VehiclesPage } from '../pages/VehiclesPage';
 import { DriversPage } from '../pages/DriversPage';
 import { TripsPage } from '../pages/TripsPage';
 import { MaintenancePage } from '../pages/MaintenancePage';
+import { FuelExpensePage } from '../pages/FuelExpensePage';
 
 export const router = createBrowserRouter([
   {
@@ -41,12 +42,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'fuel-expense',
-            element: (
-              <PlaceholderPage
-                title="Fuel & Expense"
-                description="Monitor fuel usage, expense claims, and operating cost patterns."
-              />
-            ),
+            element: <FuelExpensePage />,
           },
           {
             path: 'reports',
